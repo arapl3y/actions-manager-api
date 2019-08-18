@@ -1,0 +1,15 @@
+<h1>Password recovery request</h1>
+<p>
+  Hello {{ user.username }}, it seems someone requested a password recovery
+  for your account registered with the email {{ user.email }}.
+</p>
+
+<p>
+  If it was you, please click this
+<a href="http://127.0.0.1:3333/users/forgotPassword/{{token}}/{{user.email}}">link</a>
+</p>
+
+<p>
+  If it wasn't you then we recommend you to change your password. Someone may
+  have stolen it.
+</p>
