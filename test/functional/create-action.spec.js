@@ -1,7 +1,7 @@
 'use strict'
 
 const Factory = use('Factory')
-const { test, trait } = use('Test/Suite')('Action')
+const { test, trait } = use('Test/Suite')('Create Action')
 
 trait('Auth/Client')
 trait('Test/ApiClient')
@@ -22,8 +22,6 @@ test('can create an action if authenticated', async({ client }) => {
     .loginVia(user, 'jwt')
     .send(data)
     .end()
-
-  console.log(response.error);
 
   response.assertStatus(201)
   response.assertJSONSubset({

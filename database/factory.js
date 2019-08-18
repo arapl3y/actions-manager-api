@@ -26,7 +26,7 @@ Factory.blueprint('App/Models/Action', (faker) => {
   return {
     title: faker.sentence(),
     complete: false,
-    date: "2016-18-2",
+    date: "2016-18-20",
     time: "14:22:00"
   }
 })
