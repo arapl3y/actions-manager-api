@@ -1,18 +1,15 @@
 'use strict'
 
-class Action {
+class UpdateAction {
   get rules () {
     return {
-      title: 'required|string',
-      complete: 'boolean',
-      date: 'date',
-      time: 'string'
+      title: 'string',
+      description: 'string'
     }
   }
 
   get messages() {
     return {
-      required: '{{ field }} is required',
       string: '{{ field }} is not a valid string'
     }
   }
@@ -26,4 +23,4 @@ class Action {
   }
 }
 
-module.exports = Action
+module.exports = UpdateAction

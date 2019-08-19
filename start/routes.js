@@ -32,8 +32,9 @@ Route.group(() => {
 
   // Actions
   Route.get('actions/list', 'ActionController.index')
+  Route.get('actions/:id', 'ActionController.show')
+  Route.put('actions/:id', 'ActionController.update').validator('UpdateAction')
   Route.post('actions/new', 'ActionController.store').validator('Action')
-  Route.get('actions/list/date', 'ActionController.show')
   Route.delete('actions/:id/delete', 'ActionController.destroy')
 }).middleware(['auth'])
 

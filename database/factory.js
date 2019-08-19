@@ -14,19 +14,24 @@
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
 
-Factory.blueprint('App/Models/User', (faker) => {
-  return {
+Factory.blueprint('App/Models/User', (faker, i, data) => {
+  const defaultValue =  {
     username: faker.username(),
     email: faker.email(),
     password: 'password123'
   }
+
+  return Object.assign(defaultValue, data)
 })
 
-Factory.blueprint('App/Models/Action', (faker) => {
+Factory.blueprint('App/Models/Action', (faker, i, data) => {
   return {
+    user_id: async () => {
+      return data.id || (await Factory.model('App/Models/User').create()).id
+    },
     title: faker.sentence(),
     complete: false,
-    date: "2016-18-20",
+    date: faker.date(),
     time: "14:22:00"
   }
 })

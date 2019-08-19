@@ -27,7 +27,7 @@ test('can create an action if authenticated', async({ client }) => {
   response.assertJSONSubset({
     user_id: user.id,
     title: data.title,
-    completed: data.completed,
+    complete: data.complete,
     date: data.date,
     time: data.time
   })
@@ -52,10 +52,10 @@ test('cannot create an action if not authenticated', async({ client }) => {
 
 test('cannot create an action without a title', async({ client }) => {
   const user = await Factory.model('App/Models/User').create()
-  const { completed } = await Factory.model('App/Models/Action').make()
+  const { complete } = await Factory.model('App/Models/Action').make()
 
   const data = {
-    "complete": completed
+    "complete": complete
   }
 
   const response = await client

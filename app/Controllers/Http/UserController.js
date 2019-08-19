@@ -27,9 +27,7 @@ class UserController {
         return response.status(400).send({ message: { error: 'User already registered' } })
       }
 
-      const user = await User.create(data)
-
-      return user
+      return await User.create(data)
     } catch (err) {
       return response.status(err.status).send(err)
     }
