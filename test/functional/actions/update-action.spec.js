@@ -22,9 +22,6 @@ test('a user can update an action they own', async ({ client }) => {
     .send(data)
     .end()
 
-
-    console.log('error', response.error)
-
   response.assertStatus(200)
   response.assertJSONSubset({
     id: action.id,
