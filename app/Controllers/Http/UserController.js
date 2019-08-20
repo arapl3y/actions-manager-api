@@ -3,20 +3,6 @@
 const User = use('App/Models/User')
 
 class UserController {
-  async login({ request, auth }) {
-    const { email, password } = request.all()
-
-    return await auth.attempt(email, password)
-  }
-
-  show({ auth, params }) {
-    if (auth.user.id !== Number(params.id)) {
-      return 'You cannot see someone else\'s profile'
-    }
-
-    return auth.user
-  }
-
   async store({ request, response }) {
     try {
       const data = request.only(['username', 'email', 'password'])
@@ -31,6 +17,42 @@ class UserController {
     } catch (err) {
       return response.status(err.status).send(err)
     }
+  }
+
+  async index({ request, response }) {
+    try {
+      const { limit = 20, page = 1 } = request.all()
+
+      const users = await User
+        .query()
+        .orderBy('id', 'desc')
+        .paginate(page, limit)
+
+      return response.ok(users)
+    } catch (err) {
+      return response.status(err.status).send(err)
+    }
+  }
+
+  async update({ request, response, params }) {
+    const id = params.id
+
+    const { username, password, newPassword } = request.only(['username', 'password', 'newPassword'])
+
+    const user = await User.findByOrFail('id', id)
+
+    const passwordCheck = await Hash.verify(password, user.password)
+
+    if (!passwordCheck) {
+      return response.status(400).send({ message: { error: 'Incorrect password provided' }})
+    }
+
+    user.username = username
+    user.password = newPassword
+
+    await user.save()
+
+    return user
   }
 }
 

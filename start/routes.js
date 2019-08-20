@@ -17,18 +17,25 @@
 const Route = use('Route')
 
 Route.get('/', () => {
-  return { greeting: 'Hello world' }
+  return { message: 'Welcome to the Actions Manager API' }
 })
 
-Route.post('login', 'UserController.login')
-Route.post('users', 'UserController.store')
+// Unprotected auth
+Route.post('login', 'AuthController.login')
+
+// Unprotected users
+Route.get('users', 'UserController.index')
+Route.post('users/new', 'UserController.store')
 Route.post('users/forgotPassword', 'ForgotPasswordController.store')
 Route.put('users/forgotPassword/:token/:email', 'ForgotPasswordController.update')
 
+// Protected routes
 Route.group(() => {
+  // Auth
+  Route.get('users/me', 'AuthController.getUser')
+
   // Users
-  Route.get('users/:id', 'UserController.show')
-  Route.put('users/:id', 'UpdateUserInfoController.update')
+  Route.put('users/:id', 'UserController.update')
 
   // Actions
   Route.get('actions/list', 'ActionController.index')
