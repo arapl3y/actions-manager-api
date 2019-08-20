@@ -13,8 +13,7 @@ test('can create an action if authenticated', async({ client }) => {
   const data = {
     "title": "Meditate for 30 minutes",
     "complete": false,
-    "date": "2019-08-16",
-    "time": "10:30:00"
+    "date": "2019-08-16"
   }
 
   const response = await client
@@ -28,8 +27,7 @@ test('can create an action if authenticated', async({ client }) => {
     user_id: user.id,
     title: data.title,
     complete: data.complete,
-    date: data.date,
-    time: data.time
+    date: data.date
   })
 })
 
@@ -38,8 +36,7 @@ test('cannot create an action if not authenticated', async({ client }) => {
   const data = {
     "title": "Meditate for 30 mins",
     "complete": false,
-    "date": "2019-17-10",
-    "time": "14:22:00"
+    "date": "2019-17-10"
   }
 
   const response = await client

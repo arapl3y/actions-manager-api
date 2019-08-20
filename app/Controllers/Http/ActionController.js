@@ -5,15 +5,14 @@ class ActionController {
     try {
       const user = await auth.getUser()
 
-      const { title, complete, date, time } = request.all()
+      const { title, complete, date } = request.all()
 
       const action = await user.actions()
         .create({
           user_id: user.id,
           title,
           complete,
-          date,
-          time
+          date
         })
 
       return response.created(action)

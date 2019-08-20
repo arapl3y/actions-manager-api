@@ -5,8 +5,7 @@ class Action {
     return {
       title: 'required|string',
       complete: 'boolean',
-      date: 'date',
-      time: 'string'
+      date: 'date'
     }
   }
 
