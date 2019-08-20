@@ -27,7 +27,8 @@
     "@adonisjs/mail": "^3.0.9",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
-    "pg": "^7.12.1"
+    "pg": "^7.12.1",
+    "url-parse": "^1.4.7"
   },
   "devDependencies": {},
   "autoload": {
