@@ -1,17 +1,20 @@
 'use strict'
 
 const User = use('App/Models/User')
+const Hash = use('Hash')
 
 class UserController {
   async store({ request, response }) {
     try {
       const data = request.only(['username', 'email', 'password'])
 
-      const userExists = await User.findBy('email', data.email)
+      const userExists = await User.findByOrFail('email', data.email)
 
       if (userExists) {
         return response.status(400).send({ message: { error: 'User already registered' } })
       }
+
+      // Add transformer to hide password and id
 
       return await User.create(data)
     } catch (err) {
@@ -35,24 +38,28 @@ class UserController {
   }
 
   async update({ request, response, params }) {
-    const id = params.id
+    try {
+      const { id } = params
 
-    const { username, password, newPassword } = request.only(['username', 'password', 'newPassword'])
+      const { username, password, newPassword } = request.only(['username', 'password', 'newPassword'])
 
-    const user = await User.findByOrFail('id', id)
+      const user = await User.findByOrFail('id', id)
 
-    const passwordCheck = await Hash.verify(password, user.password)
+      const passwordCheck = await Hash.verify(password, user.password)
 
-    if (!passwordCheck) {
-      return response.status(400).send({ message: { error: 'Incorrect password provided' }})
+      if (!passwordCheck) {
+        return response.status(400).send({ message: { error: 'Incorrect password provided' }})
+      }
+
+      user.username = username
+      user.password = newPassword
+
+      await user.save()
+
+      return response.ok(user)
+    } catch(err) {
+      return response.status(err.status)
     }
-
-    user.username = username
-    user.password = newPassword
-
-    await user.save()
-
-    return user
   }
 }
 

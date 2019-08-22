@@ -5,7 +5,7 @@ class ActionController {
     try {
       const user = await auth.getUser()
 
-      const { title, complete, date } = request.all()
+      const { title, complete, date } = request.only(['title', 'complete', 'date'])
 
       const action = await user.actions()
         .create({
@@ -59,9 +59,10 @@ class ActionController {
   async update({ response, request, params, auth }) {
     try {
       const user = await auth.getUser()
+      const { id } = params
       const { title, complete } = request.only(['title', 'complete'])
 
-      const action = await Action.findOrFail(params.id)
+      const action = await Action.findOrFail(id)
 
       if (action.user_id !== user.id) {
         return response.status(401).send('Login please')
