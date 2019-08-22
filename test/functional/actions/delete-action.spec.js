@@ -13,7 +13,7 @@ test('a user can delete an action they own', async ({ client }) => {
   await user.actions().save(action)
 
   const response = await client
-    .delete(`/actions/${action.id}/delete`)
+    .delete(`/actions/${action.id}`)
     .loginVia(user, 'jwt')
     .end()
 

@@ -7,7 +7,6 @@ trait('Auth/Client')
 
 test('a user can update an action they own', async ({ client }) => {
   const user = await Factory.model('App/Models/User').create()
-
   const action = await Factory.model('App/Models/Action').make()
 
   await user.actions().save(action)
@@ -17,7 +16,7 @@ test('a user can update an action they own', async ({ client }) => {
   }
 
   const response = await client
-    .put(`/actions/${action.id}`)
+    .put(`actions/${action.id}`)
     .loginVia(user, 'jwt')
     .send(data)
     .end()
@@ -41,7 +40,7 @@ test('cannot update an action they do not own', async ({ assert, client }) => {
   }
 
   const response = await client
-    .put(`/actions/${action.id}`)
+    .put(`actions/${action.id}`)
     .loginVia(user, 'jwt')
     .send(data)
     .end()
