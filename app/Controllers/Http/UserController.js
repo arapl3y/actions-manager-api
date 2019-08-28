@@ -8,7 +8,7 @@ class UserController {
     try {
       const data = request.only(['username', 'email', 'password'])
 
-      const userExists = await User.findByOrFail('email', data.email)
+      const userExists = await User.findBy('email', data.email)
 
       if (userExists) {
         return response.status(400).send({ message: { error: 'User already registered' } })
