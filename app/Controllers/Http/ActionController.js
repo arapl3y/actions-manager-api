@@ -5,7 +5,7 @@ class ActionController {
     try {
       const user = await auth.getUser()
 
-      const { title, complete, date } = request.only(['title', 'complete', 'date'])
+      const { title, complete = false, date = new Date().toLocaleDateString() } = request.only(['title', 'complete', 'date'])
 
       const action = await user.actions()
         .create({
